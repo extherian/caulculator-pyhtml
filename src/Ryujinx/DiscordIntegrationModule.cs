@@ -4,15 +4,12 @@ using MsgPack;
 using Ryujinx.Ava.Utilities;
 using Ryujinx.Ava.Utilities.AppLibrary;
 using Ryujinx.Ava.Utilities.Configuration;
+using Ryujinx.Ava.Utilities.PlayReport;
 using Ryujinx.Common;
-using Ryujinx.Common.Helper;
 using Ryujinx.Common.Logging;
 using Ryujinx.HLE;
 using Ryujinx.HLE.Loaders.Processes;
 using Ryujinx.Horizon;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -40,6 +37,9 @@ namespace Ryujinx.Ava
         private static RichPresence _discordPresenceMain;
         private static RichPresence _discordPresencePlaying;
         private static ApplicationMetadata _currentApp;
+
+        public static bool HasAssetImage(string titleId) => TitleIDs.DiscordGameAssetKeys.ContainsIgnoreCase(titleId);
+        public static bool HasAnalyzer(string titleId) => PlayReports.Analyzer.TitleIds.ContainsIgnoreCase(titleId);
 
         public static void Initialize()
         {
@@ -130,14 +130,16 @@ namespace Ryujinx.Ava
             if (!TitleIDs.CurrentApplication.Value.HasValue) return;
             if (_discordPresencePlaying is null) return;
 
-            PlayReportAnalyzer.FormattedValue formattedValue =
-                PlayReport.Analyzer.Format(TitleIDs.CurrentApplication.Value, _currentApp, playReport);
+            FormattedValue formattedValue =
+                PlayReports.Analyzer.Format(TitleIDs.CurrentApplication.Value, _currentApp, playReport);
 
             if (!formattedValue.Handled) return;
 
-            _discordPresencePlaying.Details = formattedValue.Reset 
-                ? $"Playing {_currentApp.Title}" 
-                : formattedValue.FormattedString;
+            _discordPresencePlaying.Details = TruncateToByteLength(
+                formattedValue.Reset
+                    ? $"Playing {_currentApp.Title}"
+                    : formattedValue.FormattedString
+            );
 
             if (_discordClient.CurrentPresence.Details.Equals(_discordPresencePlaying.Details))
                 return; //don't trigger an update if the set presence Details are identical to current
