@@ -1,5 +1,4 @@
 ﻿using Gommon;
-using MsgPack;
 using Ryujinx.Ava.Utilities.AppLibrary;
 using System;
 using System.Collections.Generic;
@@ -31,8 +30,7 @@ namespace Ryujinx.Ava.Utilities.PlayReport
             Guard.Ensure(ulong.TryParse(titleId, NumberStyles.HexNumber, null, out _),
                 $"Cannot use a non-hexadecimal string as the Title ID for a {nameof(GameSpec)}.");
 
-            _specs.Add(transform(new GameSpec { TitleIds = [titleId] }));
-            return this;
+            return AddSpec(transform(GameSpec.Create(titleId)));
         }
 
         /// <summary>
@@ -46,8 +44,7 @@ namespace Ryujinx.Ava.Utilities.PlayReport
             Guard.Ensure(ulong.TryParse(titleId, NumberStyles.HexNumber, null, out _),
                 $"Cannot use a non-hexadecimal string as the Title ID for a {nameof(GameSpec)}.");
 
-            _specs.Add(new GameSpec { TitleIds = [titleId] }.Apply(transform));
-            return this;
+            return AddSpec(GameSpec.Create(titleId).Apply(transform));
         }
 
         /// <summary>
@@ -63,8 +60,7 @@ namespace Ryujinx.Ava.Utilities.PlayReport
             Guard.Ensure(tids.All(x => ulong.TryParse(x, NumberStyles.HexNumber, null, out _)),
                 $"Cannot use a non-hexadecimal string as the Title ID for a {nameof(GameSpec)}.");
 
-            _specs.Add(transform(new GameSpec { TitleIds = [..tids] }));
-            return this;
+            return AddSpec(transform(GameSpec.Create(tids)));
         }
 
         /// <summary>
@@ -79,13 +75,23 @@ namespace Ryujinx.Ava.Utilities.PlayReport
             Guard.Ensure(tids.All(x => ulong.TryParse(x, NumberStyles.HexNumber, null, out _)),
                 $"Cannot use a non-hexadecimal string as the Title ID for a {nameof(GameSpec)}.");
 
-            _specs.Add(new GameSpec { TitleIds = [..tids] }.Apply(transform));
+            return AddSpec(GameSpec.Create(tids).Apply(transform));
+        }
+        
+        /// <summary>
+        /// Add an analysis spec matching a specific game by title ID, with the provided pre-configured spec.
+        /// </summary>
+        /// <param name="spec">The <see cref="GameSpec"/> to add.</param>
+        /// <returns>The current <see cref="Analyzer"/>, for chaining convenience.</returns>
+        public Analyzer AddSpec(GameSpec spec)
+        {
+            _specs.Add(spec);
             return this;
         }
 
 
         /// <summary>
-        /// Runs the configured <see cref="GameSpec.FormatterSpec"/> for the specified game title ID.
+        /// Runs the configured <see cref="FormatterSpec"/> for the specified game title ID.
         /// </summary>
         /// <param name="runningGameId">The game currently running.</param>
         /// <param name="appMeta">The Application metadata information, including localized game name and play time information.</param>
@@ -94,54 +100,21 @@ namespace Ryujinx.Ava.Utilities.PlayReport
         public FormattedValue Format(
             string runningGameId,
             ApplicationMetadata appMeta,
-            MessagePackObject playReport
+            Horizon.Prepo.Types.PlayReport playReport
         )
         {
-            if (!playReport.IsDictionary)
+            if (!playReport.ReportData.IsDictionary)
                 return FormattedValue.Unhandled;
 
             if (!_specs.TryGetFirst(s => runningGameId.EqualsAnyIgnoreCase(s.TitleIds), out GameSpec spec))
                 return FormattedValue.Unhandled;
 
-            foreach (FormatterSpec formatSpec in spec.SimpleValueFormatters.OrderBy(x => x.Priority))
+            foreach (FormatterSpecBase formatSpec in spec.ValueFormatters.OrderBy(x => x.Priority))
             {
-                if (!playReport.AsDictionary().TryGetValue(formatSpec.ReportKey, out MessagePackObject valuePackObject))
+                if (!formatSpec.Format(appMeta, playReport, out FormattedValue value))
                     continue;
 
-                return formatSpec.Formatter(new Value { Application = appMeta, PackedValue = valuePackObject });
-            }
-
-            foreach (MultiFormatterSpec formatSpec in spec.MultiValueFormatters.OrderBy(x => x.Priority))
-            {
-                List<MessagePackObject> packedObjects = [];
-                foreach (var reportKey in formatSpec.ReportKeys)
-                {
-                    if (!playReport.AsDictionary().TryGetValue(reportKey, out MessagePackObject valuePackObject))
-                        continue;
-
-                    packedObjects.Add(valuePackObject);
-                }
-
-                if (packedObjects.Count != formatSpec.ReportKeys.Length)
-                    return FormattedValue.Unhandled;
-
-                return formatSpec.Formatter(packedObjects
-                    .Select(packObject => new Value { Application = appMeta, PackedValue = packObject })
-                    .ToArray());
-            }
-
-            foreach (SparseMultiFormatterSpec formatSpec in spec.SparseMultiValueFormatters.OrderBy(x => x.Priority))
-            {
-                Dictionary<string, Value> packedObjects = [];
-                foreach (var reportKey in formatSpec.ReportKeys)
-                {
-                    if (!playReport.AsDictionary().TryGetValue(reportKey, out MessagePackObject valuePackObject))
-                        continue;
-
-                    packedObjects.Add(reportKey, new Value { Application = appMeta, PackedValue = valuePackObject });
-                }
-
-                return formatSpec.Formatter(packedObjects);
+                return value;
             }
 
             return FormattedValue.Unhandled;
