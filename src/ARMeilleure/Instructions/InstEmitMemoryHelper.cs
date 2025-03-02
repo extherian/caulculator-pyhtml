@@ -478,7 +478,7 @@ namespace ARMeilleure.Instructions
                 context.BranchIf(lblNotWatched, pte, Const(0L), Comparison.GreaterOrEqual, BasicBlockFrequency.Cold);
 
                 // Signal memory tracking. Size here doesn't matter as address is assumed to be size aligned here.
-                context.Call(typeof(NativeInterface).GetMethod(nameof(NativeInterface.SignalMemoryTracking)), address, Const(1UL), Const(write ? 1 : 0));
+                context.Call(NativeInterface.Type.GetMethod(nameof(NativeInterface.SignalMemoryTracking)), address, Const(1UL), Const(write ? 1 : 0));
                 context.MarkLabel(lblNotWatched);
 
                 pte = context.BitwiseAnd(pte, Const(0xffffffffffffUL)); // Ignore any software protection bits. (they are still used by C# memory access)
@@ -489,7 +489,7 @@ namespace ARMeilleure.Instructions
                 context.BranchIfTrue(lblNonNull, pte, BasicBlockFrequency.Cold);
 
                 // The call is not expected to return (it should throw).
-                context.Call(typeof(NativeInterface).GetMethod(nameof(NativeInterface.ThrowInvalidMemoryAccess)), address);
+                context.Call(NativeInterface.Type.GetMethod(nameof(NativeInterface.ThrowInvalidMemoryAccess)), address);
                 context.MarkLabel(lblNonNull);
             }
 
@@ -535,16 +535,16 @@ namespace ARMeilleure.Instructions
             switch (size)
             {
                 case 0:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.ReadByte));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.ReadByte));
                     break;
                 case 1:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.ReadUInt16));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.ReadUInt16));
                     break;
                 case 2:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.ReadUInt32));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.ReadUInt32));
                     break;
                 case 3:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.ReadUInt64));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.ReadUInt64));
                     break;
             }
 
@@ -564,19 +564,19 @@ namespace ARMeilleure.Instructions
             switch (size)
             {
                 case 0:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.ReadByte));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.ReadByte));
                     break;
                 case 1:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.ReadUInt16));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.ReadUInt16));
                     break;
                 case 2:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.ReadUInt32));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.ReadUInt32));
                     break;
                 case 3:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.ReadUInt64));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.ReadUInt64));
                     break;
                 case 4:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.ReadVector128));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.ReadVector128));
                     break;
             }
 
@@ -608,16 +608,16 @@ namespace ARMeilleure.Instructions
             switch (size)
             {
                 case 0:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.WriteByte));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.WriteByte));
                     break;
                 case 1:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.WriteUInt16));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.WriteUInt16));
                     break;
                 case 2:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.WriteUInt32));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.WriteUInt32));
                     break;
                 case 3:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.WriteUInt64));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.WriteUInt64));
                     break;
             }
 
@@ -643,19 +643,19 @@ namespace ARMeilleure.Instructions
             switch (size)
             {
                 case 0:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.WriteByte));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.WriteByte));
                     break;
                 case 1:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.WriteUInt16));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.WriteUInt16));
                     break;
                 case 2:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.WriteUInt32));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.WriteUInt32));
                     break;
                 case 3:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.WriteUInt64));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.WriteUInt64));
                     break;
                 case 4:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.WriteVector128));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.WriteVector128));
                     break;
             }
 

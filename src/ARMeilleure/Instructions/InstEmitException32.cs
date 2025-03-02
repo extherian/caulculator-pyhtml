@@ -14,7 +14,7 @@ namespace ARMeilleure.Instructions
 
             context.StoreToContext();
 
-            context.Call(typeof(NativeInterface).GetMethod(name), Const(((IOpCode)op).Address), Const(op.Id));
+            context.Call(NativeInterface.Type.GetMethod(name), Const(((IOpCode)op).Address), Const(op.Id));
 
             context.LoadFromContext();
 
@@ -29,7 +29,7 @@ namespace ARMeilleure.Instructions
 
             context.StoreToContext();
 
-            context.Call(typeof(NativeInterface).GetMethod(name), Const(((IOpCode)op).Address), Const(op.Id));
+            context.Call(NativeInterface.Type.GetMethod(name), Const(((IOpCode)op).Address), Const(op.Id));
 
             context.LoadFromContext();
 

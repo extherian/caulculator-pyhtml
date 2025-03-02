@@ -2,12 +2,32 @@ using ARMeilleure.Memory;
 using ARMeilleure.State;
 using ARMeilleure.Translation;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace ARMeilleure.Instructions
 {
     static class NativeInterface
     {
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
+        public static readonly Type Type = typeof(NativeInterface);
+
+        static NativeInterface()
+        {
+            try
+            {
+                //TODO: 
+                // dude. this is so bad. figure out AOT's bs.
+                // this needs to be compiled into the AOT build but it doesn't get compiled 
+                // under any circumstances unless directly referenced like below, not dynamically which is how it's always used.
+                _ = GetFunctionAddress(0);
+            }
+            catch
+            {
+                
+            }
+        }
+        
         private class ThreadContext
         {
             public ExecutionContext Context { get; }
@@ -178,8 +198,7 @@ namespace ARMeilleure.Instructions
         {
             throw new InvalidAccessException(address);
         }
-
-        [UnmanagedCallersOnly]
+        
         public static ulong GetFunctionAddress(ulong address)
         {
             TranslatedFunction function = Context.Translator.GetOrTranslate(address, GetContext().ExecutionMode);

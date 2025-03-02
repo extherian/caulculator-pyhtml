@@ -7,15 +7,17 @@ namespace ARMeilleure.Instructions
 {
     static partial class InstEmit
     {
+        private const string SupervisorCallName = nameof(NativeInterface.SupervisorCall);
+        private const string BreakName = nameof(NativeInterface.Break);
+        private const string UndefinedName = nameof(NativeInterface.Undefined);
+        
         public static void Brk(ArmEmitterContext context)
         {
             OpCodeException op = (OpCodeException)context.CurrOp;
 
-            string name = nameof(NativeInterface.Break);
-
             context.StoreToContext();
 
-            context.Call(typeof(NativeInterface).GetMethod(name), Const(op.Address), Const(op.Id));
+            context.Call(NativeInterface.Type.GetMethod(BreakName), Const(op.Address), Const(op.Id));
 
             context.LoadFromContext();
 
@@ -25,12 +27,10 @@ namespace ARMeilleure.Instructions
         public static void Svc(ArmEmitterContext context)
         {
             OpCodeException op = (OpCodeException)context.CurrOp;
-
-            string name = nameof(NativeInterface.SupervisorCall);
-
+            
             context.StoreToContext();
 
-            context.Call(typeof(NativeInterface).GetMethod(name), Const(op.Address), Const(op.Id));
+            context.Call(NativeInterface.Type.GetMethod(SupervisorCallName), Const(op.Address), Const(op.Id));
 
             context.LoadFromContext();
 
@@ -41,11 +41,9 @@ namespace ARMeilleure.Instructions
         {
             OpCode op = context.CurrOp;
 
-            string name = nameof(NativeInterface.Undefined);
-
             context.StoreToContext();
 
-            context.Call(typeof(NativeInterface).GetMethod(name), Const(op.Address), Const(op.RawOpCode));
+            context.Call(NativeInterface.Type.GetMethod(UndefinedName), Const(op.Address), Const(op.RawOpCode));
 
             context.LoadFromContext();
 

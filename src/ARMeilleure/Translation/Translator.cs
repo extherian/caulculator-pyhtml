@@ -457,7 +457,7 @@ namespace ARMeilleure.Translation
             context.Store(address, count);
             context.BranchIf(lblEnd, curCount, Const(MinsCallForRejit), Comparison.NotEqual, BasicBlockFrequency.Cold);
 
-            context.Call(typeof(NativeInterface).GetMethod(nameof(NativeInterface.EnqueueForRejit)), Const(context.EntryAddress));
+            context.Call(NativeInterface.Type.GetMethod(nameof(NativeInterface.EnqueueForRejit)), Const(context.EntryAddress));
 
             context.MarkLabel(lblEnd);
         }
@@ -473,7 +473,7 @@ namespace ARMeilleure.Translation
             Operand count = context.Load(OperandType.I32, countAddr);
             context.BranchIfTrue(lblNonZero, count, BasicBlockFrequency.Cold);
 
-            Operand running = context.Call(typeof(NativeInterface).GetMethod(nameof(NativeInterface.CheckSynchronization)));
+            Operand running = context.Call(NativeInterface.Type.GetMethod(nameof(NativeInterface.CheckSynchronization)));
             context.BranchIfTrue(lblExit, running, BasicBlockFrequency.Cold);
 
             context.Return(Const(0L));

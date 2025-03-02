@@ -127,7 +127,7 @@ namespace ARMeilleure.Instructions
                 // Timer.
                 14 => opc switch
                 {
-                    0 => typeof(NativeInterface).GetMethod(nameof(NativeInterface.GetCntpctEl0)),
+                    0 => NativeInterface.Type.GetMethod(nameof(NativeInterface.GetCntpctEl0)),
                     _ => throw new NotImplementedException($"Unknown MRRC Opc1 0x{opc:X} at 0x{op.Address:X} (0x{op.RawOpCode:X})."),
                 },
                 _ => throw new NotImplementedException($"Unknown MRRC 0x{op.RawOpCode:X} at 0x{op.Address:X}."),

@@ -29,10 +29,10 @@ namespace ARMeilleure.Instructions
             switch (GetPackedId(op))
             {
                 case 0b11_011_0000_0000_001:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.GetCtrEl0));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.GetCtrEl0));
                     break;
                 case 0b11_011_0000_0000_111:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.GetDczidEl0));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.GetDczidEl0));
                     break;
                 case 0b11_011_0100_0010_000:
                     EmitGetNzcv(context);
@@ -53,13 +53,13 @@ namespace ARMeilleure.Instructions
                     EmitGetTpidr2El0(context);
                     return;
                 case 0b11_011_1110_0000_000:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.GetCntfrqEl0));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.GetCntfrqEl0));
                     break;
                 case 0b11_011_1110_0000_001:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.GetCntpctEl0));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.GetCntpctEl0));
                     break;
                 case 0b11_011_1110_0000_010:
-                    info = typeof(NativeInterface).GetMethod(nameof(NativeInterface.GetCntvctEl0));
+                    info = NativeInterface.Type.GetMethod(nameof(NativeInterface.GetCntvctEl0));
                     break;
 
                 default:
@@ -131,7 +131,7 @@ namespace ARMeilleure.Instructions
 
                 case 0b11_011_0111_0101_001: // IC IVAU
                     Operand target = Register(op.Rt, RegisterType.Integer, OperandType.I64);
-                    context.Call(typeof(NativeInterface).GetMethod(nameof(NativeInterface.InvalidateCacheLine)), target);
+                    context.Call(NativeInterface.Type.GetMethod(nameof(NativeInterface.InvalidateCacheLine)), target);
                     break;
             }
         }

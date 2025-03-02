@@ -4,6 +4,7 @@ using ARMeilleure.IntermediateRepresentation;
 using ARMeilleure.State;
 using ARMeilleure.Translation.Cache;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using static ARMeilleure.IntermediateRepresentation.Operand.Factory;
 
@@ -181,7 +182,7 @@ namespace ARMeilleure.Translation
             context.Tailcall(hostAddress, nativeContext);
 
             context.MarkLabel(lblFallback);
-            hostAddress = context.Call(typeof(NativeInterface).GetMethod(nameof(NativeInterface.GetFunctionAddress)), guestAddress);
+            hostAddress = context.Call(NativeInterface.Type.GetMethod(nameof(NativeInterface.GetFunctionAddress)), guestAddress);
             context.Tailcall(hostAddress, nativeContext);
 
             ControlFlowGraph cfg = context.GetControlFlowGraph();
@@ -206,7 +207,7 @@ namespace ARMeilleure.Translation
             Operand guestAddress = context.Load(OperandType.I64,
                 context.Add(nativeContext, Const((ulong)NativeContext.GetDispatchAddressOffset())));
 
-            Operand hostAddress = context.Call(typeof(NativeInterface).GetMethod(nameof(NativeInterface.GetFunctionAddress)), guestAddress);
+            Operand hostAddress = context.Call(NativeInterface.Type.GetMethod(nameof(NativeInterface.GetFunctionAddress)), guestAddress);
             context.Tailcall(hostAddress, nativeContext);
 
             ControlFlowGraph cfg = context.GetControlFlowGraph();

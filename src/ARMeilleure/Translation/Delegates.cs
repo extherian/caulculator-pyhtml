@@ -1,6 +1,7 @@
 using ARMeilleure.Instructions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace ARMeilleure.Translation
@@ -62,7 +63,7 @@ namespace ARMeilleure.Translation
         }
 
         private static readonly SortedList<string, DelegateInfo> _delegates;
-
+        
         static Delegates()
         {
             _delegates = new SortedList<string, DelegateInfo>();
@@ -79,30 +80,30 @@ namespace ARMeilleure.Translation
             SetDelegateInfo(typeof(MathHelperF).GetMethod(nameof(MathHelperF.Round)));
             SetDelegateInfo(typeof(MathHelperF).GetMethod(nameof(MathHelperF.Truncate)));
 
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.Break)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.CheckSynchronization)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.EnqueueForRejit)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.GetCntfrqEl0)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.GetCntpctEl0)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.GetCntvctEl0)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.GetCtrEl0)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.GetDczidEl0)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.GetFunctionAddress)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.InvalidateCacheLine)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.ReadByte)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.ReadUInt16)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.ReadUInt32)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.ReadUInt64)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.ReadVector128)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.SignalMemoryTracking)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.SupervisorCall)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.ThrowInvalidMemoryAccess)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.Undefined)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.WriteByte)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.WriteUInt16)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.WriteUInt32)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.WriteUInt64)));
-            SetDelegateInfo(typeof(NativeInterface).GetMethod(nameof(NativeInterface.WriteVector128)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.Break)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.CheckSynchronization)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.EnqueueForRejit)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.GetCntfrqEl0)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.GetCntpctEl0)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.GetCntvctEl0)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.GetCtrEl0)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.GetDczidEl0)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.GetFunctionAddress)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.InvalidateCacheLine)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.ReadByte)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.ReadUInt16)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.ReadUInt32)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.ReadUInt64)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.ReadVector128)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.SignalMemoryTracking)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.SupervisorCall)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.ThrowInvalidMemoryAccess)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.Undefined)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.WriteByte)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.WriteUInt16)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.WriteUInt32)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.WriteUInt64)));
+            SetDelegateInfo(NativeInterface.Type.GetMethod(nameof(NativeInterface.WriteVector128)));
 
             SetDelegateInfo(typeof(SoftFallback).GetMethod(nameof(SoftFallback.CountLeadingSigns)));
             SetDelegateInfo(typeof(SoftFallback).GetMethod(nameof(SoftFallback.CountLeadingZeros)));
