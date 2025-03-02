@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     <DefaultItemExcludes>$(DefaultItemExcludes);._*</DefaultItemExcludes>
-    <DefaultItemExcludes>$(DefaultItemExcludes);._*</DefaultItemExcludes>
+    <Configurations>Debug;Release;DebugAOT;ReleaseAOT</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
