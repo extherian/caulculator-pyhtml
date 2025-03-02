@@ -1,3 +1,12 @@
+# You have stumbled on a gimped version of Ryujinx.
+This is the NativeAOT branch. It should run much faster than the normal version, however it's ruined by one thing: the Macro JIT.
+This single part of Ryujinx, which handles common Maxwell GPU Macros by using .NET Reflection Emit, is entirely unusable via NativeAOT and it kills the performance.
+I was getting 20FPS in BOTW with 98% FIFO usage.
+This is compared to over 100FPS with about 70% FIFO usage in standard, managed C#, Ryujinx.
+
+If there are any JIT wizards out there; I am calling to you. I believe getting this to work would be a game changer.
+[This is the offending JIT implementation.](https://github.com/Ryubing/Ryujinx/blob/feature/native_aot/src/Ryujinx.Graphics.Gpu/Engine/MME/MacroJitCompiler.cs)
+
 <table align="center">
     <tr>
         <td align="center" width="25%">
