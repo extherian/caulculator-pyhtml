@@ -1,6 +1,7 @@
 using Ryujinx.Graphics.Device;
 using Ryujinx.Graphics.Gpu.Engine.GPFifo;
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Ryujinx.Graphics.Gpu.Engine.MME
 {
@@ -52,7 +53,7 @@ namespace Ryujinx.Graphics.Gpu.Engine.MME
                 {
                     _executionEngine = new MacroHLE(processor, _hleFunction);
                 }
-                else if (GraphicsConfig.EnableMacroJit)
+                else if (GraphicsConfig.EnableMacroJit && RuntimeFeature.IsDynamicCodeSupported)
                 {
                     _executionEngine = new MacroJit();
                 }
