@@ -947,7 +947,8 @@ namespace Ryujinx.Ava
                 ConfigurationState.Instance.Multiplayer.DisableP2p,
                 ConfigurationState.Instance.Multiplayer.LdnPassphrase,
                 ConfigurationState.Instance.Multiplayer.GetLdnServer(),
-                ConfigurationState.Instance.Graphics.CustomVSyncInterval.Value,
+                ConfigurationState.Instance.Graphics.CustomVSyncInterval,
+                ConfigurationState.Instance.System.TickScalar,
                 ConfigurationState.Instance.Hacks.ShowDirtyHacks ? ConfigurationState.Instance.Hacks.EnabledHacks : null));
         }
 
@@ -1249,6 +1250,12 @@ namespace Ryujinx.Ava
 
                 if (currentHotkeyState != _prevHotkeyState)
                 {
+                    if (ConfigurationState.Instance.Hid.Hotkeys.Value.TurboModeWhileHeld &&
+                        _keyboardInterface.IsPressed((Key)ConfigurationState.Instance.Hid.Hotkeys.Value.TurboMode) != Device.TurboMode)
+                    {
+                        Device.ToggleTurbo();
+                    }
+                    
                     switch (currentHotkeyState)
                     {
                         case KeyboardHotkeyState.ToggleVSyncMode:
@@ -1261,6 +1268,12 @@ namespace Ryujinx.Ava
                         case KeyboardHotkeyState.CustomVSyncIntervalIncrement:
                             Device.IncrementCustomVSyncInterval();
                             _viewModel.CustomVSyncInterval += 1;
+                            break;
+                        case KeyboardHotkeyState.TurboMode:
+                            if (!ConfigurationState.Instance.Hid.Hotkeys.Value.TurboModeWhileHeld)
+                            {
+                                Device.ToggleTurbo();
+                            }
                             break;
                         case KeyboardHotkeyState.Screenshot:
                             ScreenshotRequested = true;
@@ -1390,6 +1403,10 @@ namespace Ryujinx.Ava
             else if (_keyboardInterface.IsPressed((Key)ConfigurationState.Instance.Hid.Hotkeys.Value.CustomVSyncIntervalDecrement))
             {
                 state = KeyboardHotkeyState.CustomVSyncIntervalDecrement;
+            }
+            else if (_keyboardInterface.IsPressed((Key)ConfigurationState.Instance.Hid.Hotkeys.Value.TurboMode))
+            {
+                state = KeyboardHotkeyState.TurboMode;
             }
 
             return state;

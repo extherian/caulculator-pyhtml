@@ -352,7 +352,8 @@ namespace Ryujinx.Headless
                 false,
                 string.Empty,
                 string.Empty,
-                options.CustomVSyncInterval);
+                options.CustomVSyncInterval,
+                100);
 
             return new Switch(configuration);
         }

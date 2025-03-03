@@ -4898,6 +4898,81 @@
       }
     },
     {
+      "ID": "SettingsTabSystemTurboMultiplierValue",
+      "Translations": {
+        "ar_SA": "",
+        "de_DE": "",
+        "el_GR": "",
+        "en_US": "Turbo multiplier:",
+        "es_ES": "",
+        "fr_FR": "",
+        "he_IL": "",
+        "it_IT": "",
+        "ja_JP": "",
+        "ko_KR": "",
+        "no_NO": "",
+        "pl_PL": "",
+        "pt_BR": "",
+        "ru_RU": "",
+        "sv_SE": "",
+        "th_TH": "",
+        "tr_TR": "",
+        "uk_UA": "",
+        "zh_CN": "",
+        "zh_TW": ""
+      }
+    },
+    {
+      "ID": "SettingsTabSystemTurboMultiplierSliderToolTip",
+      "Translations": {
+        "ar_SA": "",
+        "de_DE": "",
+        "el_GR": "",
+        "en_US": "The Turbo mode multiplier target value.\n\nLeave at 100 if unsure.",
+        "es_ES": "",
+        "fr_FR": "",
+        "he_IL": "",
+        "it_IT": "",
+        "ja_JP": "",
+        "ko_KR": "",
+        "no_NO": "",
+        "pl_PL": "",
+        "pt_BR": "",
+        "ru_RU": "",
+        "sv_SE": "",
+        "th_TH": "",
+        "tr_TR": "",
+        "uk_UA": "",
+        "zh_CN": "",
+        "zh_TW": ""
+      }
+    },
+    {
+      "ID": "SettingsTabSystemTurboMultiplierValueToolTip",
+      "Translations": {
+        "ar_SA": "",
+        "de_DE": "",
+        "el_GR": "",
+        "en_US": "The Turbo mode multiplier, as a percentage of the normal Switch clock speed.\n\nLeave at 100 if unsure.",
+        "es_ES": "",
+        "fr_FR": "",
+        "he_IL": "",
+        "it_IT": "",
+        "ja_JP": "",
+        "ko_KR": "",
+        "no_NO": "",
+        "pl_PL": "",
+        "pt_BR": "",
+        "ru_RU": "",
+        "sv_SE": "",
+        "th_TH": "",
+        "tr_TR": "",
+        "uk_UA": "",
+        "zh_CN": "",
+        "zh_TW": ""
+      }
+    },
+    {
       "ID": "SettingsTabSystemEnableFsIntegrityChecks",
       "Translations": {
         "ar_SA": "التحقق من سلامة نظام الملفات",
@@ -5095,6 +5170,31 @@
         "uk_UA": " (може викликати нестабільність)",
         "zh_CN": "会导致模拟器不稳定",
         "zh_TW": "可能導致模擬器不穩定"
+      }
+    },
+    {
+      "ID": "SettingsTabCpuHacksNote",
+      "Translations": {
+        "ar_SA": "",
+        "de_DE": "",
+        "el_GR": "",
+        "en_US": "Can and will cause crashing, slow/too fast games, etc. Use with caution.",
+        "es_ES": "",
+        "fr_FR": "",
+        "he_IL": "",
+        "it_IT": "",
+        "ja_JP": "",
+        "ko_KR": "",
+        "no_NO": "",
+        "pl_PL": "",
+        "pt_BR": "",
+        "ru_RU": "",
+        "sv_SE": "",
+        "th_TH": "",
+        "tr_TR": "",
+        "uk_UA": "",
+        "zh_CN": "",
+        "zh_TW": ""
       }
     },
     {
@@ -23795,6 +23895,56 @@
         "uk_UA": "Понизити користувацьку частоту оновлення",
         "zh_CN": "降低自定义刷新率：",
         "zh_TW": "降低自訂的重新整理頻率"
+      }
+    },
+    {
+      "ID": "SettingsTabHotkeysTurboMode",
+      "Translations": {
+        "ar_SA": "",
+        "de_DE": "",
+        "el_GR": "",
+        "en_US": "Turbo mode:",
+        "es_ES": "",
+        "fr_FR": "",
+        "he_IL": "",
+        "it_IT": "",
+        "ja_JP": "",
+        "ko_KR": "",
+        "no_NO": "",
+        "pl_PL": "",
+        "pt_BR": "",
+        "ru_RU": "",
+        "sv_SE": "",
+        "th_TH": "",
+        "tr_TR": "",
+        "uk_UA": "",
+        "zh_CN": "",
+        "zh_TW": ""
+      }
+    },
+    {
+      "ID": "SettingsTabHotkeysOnlyWhilePressed",
+      "Translations": {
+        "ar_SA": "",
+        "de_DE": "",
+        "el_GR": "",
+        "en_US": "Only while pressed",
+        "es_ES": "",
+        "fr_FR": "",
+        "he_IL": "",
+        "it_IT": "",
+        "ja_JP": "",
+        "ko_KR": "",
+        "no_NO": "",
+        "pl_PL": "",
+        "pt_BR": "",
+        "ru_RU": "",
+        "sv_SE": "",
+        "th_TH": "",
+        "tr_TR": "",
+        "uk_UA": "",
+        "zh_CN": "",
+        "zh_TW": ""
       }
     },
     {

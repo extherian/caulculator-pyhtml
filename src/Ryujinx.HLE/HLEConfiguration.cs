@@ -102,6 +102,11 @@ namespace Ryujinx.HLE
         /// Control if the Profiled Translation Cache (PTC) should be used.
         /// </summary>
         internal readonly bool EnablePtc;
+        
+        /// <summary>
+        /// Control the arbitrary scalar applied to emulated CPU tick timing.
+        /// </summary>
+        public long TickScalar { get; set; }
 
         /// <summary>
         /// Control if the guest application should be told that there is a Internet connection available.
@@ -225,6 +230,7 @@ namespace Ryujinx.HLE
                                 string multiplayerLdnPassphrase,
                                 string multiplayerLdnServer,
                                 int customVSyncInterval,
+                                long tickScalar,
                                 EnabledDirtyHack[] dirtyHacks = null)
         {
             VirtualFileSystem = virtualFileSystem;
@@ -257,6 +263,7 @@ namespace Ryujinx.HLE
             MultiplayerDisableP2p = multiplayerDisableP2p;
             MultiplayerLdnPassphrase = multiplayerLdnPassphrase;
             MultiplayerLdnServer = multiplayerLdnServer;
+            TickScalar = tickScalar;
             Hacks = dirtyHacks ?? [];
         }
     }
