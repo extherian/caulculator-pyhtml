@@ -166,17 +166,6 @@ namespace Ryujinx.HLE
             return 1000 / _frameRate[FrameTypeGame];
         }
         
-        public string FormatGameFrameRate()
-        {
-            double frameRate = GetGameFrameRate();
-            double frameTime = GetGameFrameTime();
-            string turboSuffix = _device.TurboMode
-                ? $" Turbo ({_device.TickScalar}%)"
-                : string.Empty;
-
-            return $"{frameRate:00.00} FPS ({frameTime:00.00}ms){turboSuffix}";
-        }
-        
         public string FormatFifoPercent()
         {
             double fifoPercent = GetFifoPercent();

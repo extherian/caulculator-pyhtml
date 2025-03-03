@@ -87,7 +87,7 @@
                     <TextBlock
                         Foreground="{DynamicResource SecondaryTextColor}"
                         TextDecorations="Underline"
-                        Text="{ext:Locale SettingsTabCpuHacksNote}" />
+                        Text="{ext:Locale SettingsTabSystemHacksNote}" />
                 </StackPanel>
                 <StackPanel
                     Margin="10,0,0,0"
@@ -97,8 +97,9 @@
                                 Orientation="Horizontal">
                         <TextBlock
                             VerticalAlignment="Center"
-                            Text="{ext:Locale SettingsTabSystemTurboMultiplierValue}"
-                            ToolTip.Tip="{ext:Locale SettingsTabSystemTurboMultiplierValueToolTip}"
+                            Background="Transparent"
+                            Text="{ext:Locale SettingsTabSystemTurboMultiplier}"
+                            ToolTip.Tip="{ext:Locale SettingsTabSystemTurboMultiplierToolTip}"
                             Width="250" />
                         <ui:NumberBox ToolTip.Tip="{ext:Locale SettingsTabSystemTurboMultiplierValueToolTip}"
                                       Value="{Binding TurboMultiplier}"
@@ -110,7 +111,7 @@
                                       Minimum="50"
                                       Maximum="500" />
                         <Slider Value="{Binding TurboMultiplier}"
-                                ToolTip.Tip="{ext:Locale SettingsTabSystemTurboMultiplierSliderToolTip}"
+                                ToolTip.Tip="{ext:Locale SettingsTabSystemTurboMultiplierValueToolTip}"
                                 MinWidth="175"
                                 Margin="10,-3,0,0"
                                 Height="32"

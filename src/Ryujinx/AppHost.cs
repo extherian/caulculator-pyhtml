@@ -4,6 +4,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Threading;
 using DiscordRPC;
+using Gommon;
 using LibHac.Common;
 using LibHac.Ns;
 using LibHac.Tools.FsSystem;
@@ -1153,9 +1154,21 @@ namespace Ryujinx.Ava
                 LocaleManager.Instance[LocaleKeys.VolumeShort] + $": {(int)(Device.GetVolume() * 100)}%",
                 dockedMode,
                 ConfigurationState.Instance.Graphics.AspectRatio.Value.ToText(),
-                Device.Statistics.FormatGameFrameRate(),
+                FormatGameFrameRate(),
                 Device.Statistics.FormatFifoPercent(),
                 _displayCount));
+        }
+
+        private string FormatGameFrameRate()
+        {
+            string frameRate = Device.Statistics.GetGameFrameRate().ToString("00.00");
+            string frameTime = Device.Statistics.GetGameFrameTime().ToString("00.00");
+
+            return Device.TurboMode
+                ? LocaleManager.GetUnformatted(LocaleKeys.FpsTurboStatusBarText)
+                    .Format(frameRate, frameTime, Device.TickScalar)
+                : LocaleManager.GetUnformatted(LocaleKeys.FpsStatusBarText)
+                    .Format(frameRate, frameTime);
         }
 
         public async Task ShowExitPrompt()

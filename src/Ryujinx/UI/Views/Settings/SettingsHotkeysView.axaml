@@ -113,7 +113,7 @@
                     </ToggleButton>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{ext:Locale SettingsTabHotkeysTurboMode}" Classes="settingHeader" />
+                    <TextBlock Text="{ext:Locale SettingsTabHotkeysTurboMode}" Classes="settingHeader" ToolTip.Tip="{ext:Locale SettingsTabHotkeysTurboModeToolTip}" Background="Transparent" />
                     <ToggleButton Name="TurboMode">
                         <TextBlock Text="{Binding KeyboardHotkey.TurboMode, Converter={x:Static helpers:KeyValueConverter.Instance}}" />
                     </ToggleButton>
