@@ -20,7 +20,7 @@ namespace Ryujinx.HLE
     {
         public static Switch Shared { get; private set; }
         
-        public HLEConfiguration Configuration { get; }
+        public HleConfiguration Configuration { get; }
         public IHardwareDeviceDriver AudioDeviceDriver { get; }
         public MemoryBlock Memory { get; }
         public GpuContext Gpu { get; }
@@ -52,7 +52,7 @@ namespace Ryujinx.HLE
 
         public DirtyHacks DirtyHacks { get; }
 
-        public Switch(HLEConfiguration configuration)
+        public Switch(HleConfiguration configuration)
         {
             ArgumentNullException.ThrowIfNull(configuration.GpuRenderer);
             ArgumentNullException.ThrowIfNull(configuration.AudioDeviceDriver);
@@ -103,16 +103,20 @@ namespace Ryujinx.HLE
             Gpu.GPFifo.DispatchCalls();
         }
 
-        public void IncrementCustomVSyncInterval()
+        public int IncrementCustomVSyncInterval()
         {
             CustomVSyncInterval += 1;
             UpdateVSyncInterval();
+
+            return CustomVSyncInterval;
         }
 
-        public void DecrementCustomVSyncInterval()
+        public int DecrementCustomVSyncInterval()
         {
             CustomVSyncInterval -= 1;
             UpdateVSyncInterval();
+
+            return CustomVSyncInterval;
         }
 
         public void UpdateVSyncInterval()
