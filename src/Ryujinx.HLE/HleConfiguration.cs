@@ -206,6 +206,7 @@ namespace Ryujinx.HLE
                                 VSyncMode vSyncMode,
                                 bool enableDockedMode,
                                 bool enablePtc,
+                                long tickScalar,
                                 bool enableInternetAccess,
                                 IntegrityCheckLevel fsIntegrityCheckLevel,
                                 int fsGlobalAccessLogMode,
@@ -222,7 +223,6 @@ namespace Ryujinx.HLE
                                 string multiplayerLdnPassphrase,
                                 string multiplayerLdnServer,
                                 int customVSyncInterval,
-                                long tickScalar,
                                 EnabledDirtyHack[] dirtyHacks = null)
         {
             MemoryConfiguration = memoryConfiguration;
@@ -232,6 +232,7 @@ namespace Ryujinx.HLE
             CustomVSyncInterval = customVSyncInterval;
             EnableDockedMode = enableDockedMode;
             EnablePtc = enablePtc;
+            TickScalar = tickScalar;
             EnableInternetAccess = enableInternetAccess;
             FsIntegrityCheckLevel = fsIntegrityCheckLevel;
             FsGlobalAccessLogMode = fsGlobalAccessLogMode;
@@ -247,7 +248,6 @@ namespace Ryujinx.HLE
             MultiplayerDisableP2p = multiplayerDisableP2p;
             MultiplayerLdnPassphrase = multiplayerLdnPassphrase;
             MultiplayerLdnServer = multiplayerLdnServer;
-            TickScalar = tickScalar;
             Hacks = dirtyHacks ?? [];
         }
 

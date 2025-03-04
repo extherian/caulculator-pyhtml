@@ -4,6 +4,7 @@ using Ryujinx.Audio.Backends.CompatLayer;
 using Ryujinx.Audio.Integration;
 using Ryujinx.Common;
 using Ryujinx.Common.Configuration;
+using Ryujinx.Cpu;
 using Ryujinx.Graphics.Gpu;
 using Ryujinx.HLE.FileSystem;
 using Ryujinx.HLE.HOS;
@@ -31,7 +32,7 @@ namespace Ryujinx.HLE
 
         public long TickScalar
         {
-            get => System?.TickSource?.TickScalar ?? 100;
+            get => System?.TickSource?.TickScalar ?? ITickSource.RealityTickScalar;
             set => System.TickSource.TickScalar = value;
         }
         
@@ -83,7 +84,7 @@ namespace Ryujinx.HLE
 
             VSyncMode                               = Configuration.VSyncMode;
             CustomVSyncInterval                     = Configuration.CustomVSyncInterval;
-            TickScalar                              = TurboMode ? Configuration.TickScalar : 100;
+            TickScalar                              = TurboMode ? Configuration.TickScalar : ITickSource.RealityTickScalar;
             System.State.DockedMode                 = Configuration.EnableDockedMode;
             System.PerformanceState.PerformanceMode = System.State.DockedMode ? PerformanceMode.Boost : PerformanceMode.Default;
             System.EnablePtc                        = Configuration.EnablePtc;
@@ -138,7 +139,7 @@ namespace Ryujinx.HLE
         public void ToggleTurbo()
         {
             TurboMode = !TurboMode;
-            TickScalar = TurboMode ? Configuration.TickScalar : 100;
+            TickScalar = TurboMode ? Configuration.TickScalar : ITickSource.RealityTickScalar;
         }
 
         public bool LoadCart(string exeFsDir, string romFsFile = null) => Processes.LoadUnpackedNca(exeFsDir, romFsFile);

@@ -862,6 +862,7 @@ namespace Ryujinx.Ava.Utilities.Configuration
                 Graphics.VSyncMode,
                 System.EnableDockedMode,
                 System.EnablePtc,
+                System.TickScalar,
                 System.EnableInternetAccess,
                 System.EnableFsIntegrityChecks 
                     ? IntegrityCheckLevel.ErrorOnInvalid 
@@ -882,7 +883,6 @@ namespace Ryujinx.Ava.Utilities.Configuration
                 Multiplayer.LdnPassphrase,
                 Multiplayer.GetLdnServer(),
                 Graphics.CustomVSyncInterval,
-                System.TickScalar,
                 Hacks.ShowDirtyHacks ? Hacks.EnabledHacks : null);
     }
 }

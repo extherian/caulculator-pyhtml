@@ -10,6 +10,7 @@ using Ryujinx.Common.Configuration.Hid.Controller.Motion;
 using Ryujinx.Common.Configuration.Hid.Keyboard;
 using Ryujinx.Common.Logging;
 using Ryujinx.Common.Utilities;
+using Ryujinx.Cpu;
 using Ryujinx.Graphics.GAL;
 using Ryujinx.Graphics.GAL.Multithreading;
 using Ryujinx.Graphics.OpenGL;
@@ -311,51 +312,44 @@ namespace Ryujinx.Headless
 
             return new OpenGLRenderer();
         }
-
-        private static Switch InitializeEmulationContext(WindowBase window, IRenderer renderer, Options options)
-        {
-            BackendThreading threadingMode = options.BackendThreading;
-
-            bool threadedGAL = threadingMode == BackendThreading.On || (threadingMode == BackendThreading.Auto && renderer.PreferThreading);
-
-            if (threadedGAL)
-            {
-                renderer = new ThreadedRenderer(renderer);
-            }
-
-            HLEConfiguration configuration = new(_virtualFileSystem,
-                _libHacHorizonManager,
-                _contentManager,
-                _accountManager,
-                _userChannelPersistence,
-                renderer,
-                new SDL2HardwareDeviceDriver(),
-                options.DramSize,
-                window,
-                options.SystemLanguage,
-                options.SystemRegion,
-                options.VSyncMode,
-                !options.DisableDockedMode,
-                !options.DisablePTC,
-                options.EnableInternetAccess,
-                !options.DisableFsIntegrityChecks ? IntegrityCheckLevel.ErrorOnInvalid : IntegrityCheckLevel.None,
-                options.FsGlobalAccessLogMode,
-                options.SystemTimeOffset,
-                options.SystemTimeZone,
-                options.MemoryManagerMode,
-                options.IgnoreMissingServices,
-                options.AspectRatio,
-                options.AudioVolume,
-                options.UseHypervisor ?? true,
-                options.MultiplayerLanInterfaceId,
-                Common.Configuration.Multiplayer.MultiplayerMode.Disabled,
-                false,
-                string.Empty,
-                string.Empty,
-                options.CustomVSyncInterval,
-                100);
-
-            return new Switch(configuration);
-        }
+        
+        private static Switch InitializeEmulationContext(WindowBase window, IRenderer renderer, Options options) =>
+            new(
+                new HleConfiguration(
+                        options.DramSize,
+                        options.SystemLanguage,
+                        options.SystemRegion,
+                        options.VSyncMode,
+                        !options.DisableDockedMode,
+                        !options.DisablePTC,
+                        ITickSource.RealityTickScalar,
+                        options.EnableInternetAccess,
+                        !options.DisableFsIntegrityChecks ? IntegrityCheckLevel.ErrorOnInvalid : IntegrityCheckLevel.None,
+                        options.FsGlobalAccessLogMode,
+                        options.SystemTimeOffset,
+                        options.SystemTimeZone,
+                        options.MemoryManagerMode,
+                        options.IgnoreMissingServices,
+                        options.AspectRatio,
+                        options.AudioVolume,
+                        options.UseHypervisor ?? true,
+                        options.MultiplayerLanInterfaceId,
+                        Common.Configuration.Multiplayer.MultiplayerMode.Disabled,
+                        false,
+                        string.Empty,
+                        string.Empty,
+                        options.CustomVSyncInterval
+                    )
+                    .Configure(
+                        _virtualFileSystem,
+                        _libHacHorizonManager,
+                        _contentManager,
+                        _accountManager,
+                        _userChannelPersistence,
+                        renderer.TryMakeThreaded(options.BackendThreading),
+                        new SDL2HardwareDeviceDriver(),
+                        window
+                    )
+            );
     }
 }

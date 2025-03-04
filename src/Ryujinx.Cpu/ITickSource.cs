@@ -8,6 +8,8 @@ namespace Ryujinx.Cpu
     /// </summary>
     public interface ITickSource : ICounter
     {
+        public const long RealityTickScalar = 100;
+        
         /// <summary>
         /// Time elapsed since the counter was created.
         /// </summary>
