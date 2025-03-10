@@ -109,7 +109,7 @@
                                       SimpleNumberFormat="F0"
                                       SpinButtonPlacementMode="Hidden"
                                       Minimum="50"
-                                      Maximum="500" />
+                                      Maximum="300" />
                         <Slider Value="{Binding TurboMultiplier}"
                                 ToolTip.Tip="{ext:Locale SettingsTabSystemTurboMultiplierValueToolTip}"
                                 MinWidth="175"
